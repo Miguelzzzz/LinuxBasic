@@ -1,0 +1,107 @@
+Introdução{
+	O principal editor de texto para Linux e UNIX é um programa chamado "vi".
+	O editor vi está disponível em todas as distribuições Linux do mundo. Isto não é verdade para qualquer outro editor.
+	O editor vi pode ser executado tanto em uma CLI (interface de linha de comando) quanto em uma GUI (interface gráfica do usuário).
+};
+
+
+
+
+
+Criar novo arquivo{
+	vi newfile.txt = Crio um arquivo novo usando "vi" pra fazer seu conteudo;
+};
+
+
+
+
+
+Comandos pro Editor{
+	Movimento do modo de comando{
+		Inicialmente, o programa é iniciado no modo de comando. 
+		Pra retornar ao modo de comando quando quiser use a tecla "ESC";
+
+		Movimento:	Resultado:
+		h		Deixou um caractere
+		j		Abaixo uma linha
+		k		Acima uma linha
+		l		Um caractere à direita
+		w		Uma palavra para a frente
+		b		Uma palavra atrás
+		^		Início da linha
+		$		Fim da linha
+	};
+
+	Ações do modo de comando{
+		Padrão:	  Vi:	   Significado:
+		cut	  d	   deletar
+		copy	  y	   copiar
+		paste	  P | p	   colar
+	};
+
+	Excluir{
+		Ação:	Resultado:
+		dd	Excluir linha atual
+		3dd	Excluir as próximas três linhas
+		dw	Excluir a palavra atual
+		d3w	Excluira as próximas três palavras
+		d4h	Excluir quatro caracteres à esquerda
+	};
+
+	Mudar{	
+		Ação:	Resultado:
+		cc	Mudar linha atual
+		cw	Mudar palavra atual
+		c3w	Mudar as próximas três palavras
+		c5h	Mudar cinco caracteres para a esquerda
+	};
+
+	Arrancar (Yank){
+		Ação:	Resultado:
+		yy	Arranque a linha atual
+		3yy	Arranque as próximas três linhas
+		yw	Arranque as próximas três linhas
+		y$	Arranque até o fim da linha
+	};
+
+	Colocar{
+		Ação:	Resultado:
+		p	Colocar (colar) após o cursor
+		P	Colocar antes do cursor
+	};
+
+	Pesquisando em vi - "ctrl-f"{
+		Pesquisa no vi/vim:
+			Para pesquisar para frente:
+				Digite / seguido do termo e pressione Enter.
+					n para próxima correspondência.
+					N para a correspondência anterior.
+			Para pesquisar para trás:
+				Digite ? seguido do termo e pressione Enter.
+					n para próxima correspondência (na direção oposta).
+					N para a correspondência anterior.
+	};
+
+	Modo de inserção{
+		Entrada:	Objetivo:
+		a		Entrar no modo de inserção logo após o cursor
+		A		Entrar no modo de inserção no final da linha
+		i		Entrar no modo de inserção logo antes do cursor
+		I		Entrar no modo de inserção no início da linha
+		o		Entrar no modo de inserção em uma linha em branco após o cursor
+		O		Entrar no modo de inserção em uma linha em branco antes do cursor
+	};
+
+	Ex Mode{
+		Se um ponto de exclamação, !, é adicionado a um comando, ele então tenta forçar a operação.
+
+		Entrada:		Objetivo:
+		:w			Salvar o arquivo atual no sistema de arquivos
+		:w nome_do_arquivo	Salvar uma cópia do arquivo atual como nome_do_arquivo
+		:w!			Forçar salvar arquivo atual
+		:1			Vá para a linha número 1 ou qualquer número fornecido
+		:e nome_do_arquivo	Abrir nome_do_arquivo
+		:q			Sair se nenhuma alteração for feita no arquivo
+		:q!			Sair sem salvar as alterações no arquivo
+	};
+};

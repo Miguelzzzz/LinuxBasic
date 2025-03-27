@@ -1,0 +1,306 @@
+Introdução{
+	Kernel Linux:
+		O kernel é a parte central do sistema operacional, responsável por gerenciar o hardware do computador e permitir que os programas se comuniquem com ele. 
+		Em termos simples, o kernel é a ponte entre o software (como os aplicativos que você usa) e o hardware (como o processador, a memória e os discos rígidos).
+	
+	Conceitos:   
+
+		GUI - Interface Gráfica do Usuário;
+		CLI - Interface de Linha de comando;
+
+	Estrutura Geral dos comandos:
+
+		comando [opcoes...] [argumentos...]
+};
+
+
+
+
+
+Arquivos listados pelo comando ls e suas estruturas{
+	Estrutura comum: drwx------ 2 sysadmin sysadmin     6 Dec 20  2017 Work                          
+
+	- Primeira caracter que aparece: "d" no caso acima vai representar o tipo do arquivo.
+		Símbolo:  Tipo de Arquivo:	  Descrição:
+		d	  diretorio		  Um arquivo usado para armazenar outros arquivos.
+		-	  arquivo regular	  Inclui arquivos legíveis, arquivos de imagens, arquivos binários e arquivos compactados.
+		l	  link simbólico	  Aponta para outro arquivo.
+		s	  tomada		  Permite a comunicação entre processos.
+		p	  tubo			  Permite a comunicação entre processos.
+		b	  bloquear arquivo	  Usado para se comunicar com o hardware.
+		c	  arquivo de caracteres	  Usado para se comunicar com o hardware.
+
+	- 9 Proximos caracter que aparecem: "rwx------" no caso acima
+		Vão representar as permissões dos usuarios sobre certo arquivo/diretorio.
+
+	- O "2" vai representar a contagem de links fisicos. 
+		Os links físicos são diferentes nomes que referenciam o mesmo conteúdo no sistema de arquivos. Se você modificar um, o outro também refletirá as alterações, pois ambos apontam para o mesmo inode.
+
+	- O "sysadmin" é o proprietario do arquivo e o segundo "sysadmin" representa o proprietario do grupo.
+
+	- O "6" representa o tamanho do arquivo.
+
+	- O "Dec 20  2017" representa data e hora.
+
+	- O "Work" é o nome do arquivo.
+};
+
+
+
+
+
+Expressões{
+	Expressões Regulares:
+	
+		Caracteres Regex básicos:	Significado:
+		.				Qualquer caractere único. Vai retornar por um filtro que busca pelas letras inicias e finais de uma palavra.
+		[ ]				Qualquer caractere especificado. Correspondem a um único caractere da lista ou intervalo de caracteres possíveis contidos entre parênteses.
+		[^ ]				Não é o caractere especificado. Este caractere nega os caracteres listados, diferente do exemplo normal acima.
+		*				Zero ou mais caracteres anteriores. Vai filtrar tudo que contenha zero ou mais ocorrencia da letra fornecida, posso usar junto dos [] pra pesquisar mais de 1 letra e caso queira 1 ou mais e não as de zero ocorrencia uso a repetição da letra 'ee*', pra pesquisar varias dessa forma é outra maneira, tabela de baixo.
+		^				Se o primeiro caractere do padrão, o padrão deve estar no início da linha para corresponder, caso contrário, apenas um literal ^. Filtra as linhas que começam com a palavra desejada.
+		$				Se o último caractere do padrão, o padrão deve estar no final da linha para corresponder, caso contrário, apenas um literal $. Faz com que aconteça um padrãõ no retorno, tipo 'r$' traz todas as que terminam com r.
+
+	Expreções Regulares Estendidas:
+
+		Devem ser usadas com o comando egrep ou a opção -E com o comando grep;
+
+		Caracteres Regex extendidos:	Significado:
+		+				Um ou mais do padrão anterior.
+		?				O padrão anterior é opcional.
+		{ }				Especifique correspondências mínimas, máximas ou exatas do padrão anterior.
+		|				Alternação - um "ou" lógico.
+		( )				Usado para criar grupos.
+};
+
+
+
+
+
+Permissões{
+	Permissões referente a um arquivo/diretorio: rwx --- ---
+		São divididos em 3 conjuntos de 3. O primeiro representa o proprietario, o segundo o grupo que possui o arquivo e o terceiro e qualquer outro.
+		(r) Leitura do arquivo		- 4
+		(w) Escrever no arquivo		- 2
+		(x) Executar o arquivo		- 1
+						- 0 nenhuma permissão
+};
+
+
+
+
+
+Descritores{
+	Descritores de Arquivo no Linux (STDIN, STDOUT e STDERR)
+		Descritor	Nome			Número	Função
+		STDIN		Entrada Padrão		0	Onde o processo recebe a entrada (normalmente do teclado)
+		STDOUT		Saída Padrão		1	Onde o processo envia a saída bem-sucedida (normalmente exibida no terminal)
+		STDERR		Erro Padrão		2	Onde o processo exibe mensagens de erro
+
+		STDOUT = Técnica usada para enviar a saída de um comando para um arquivo, em vez de exibi-la no terminal.
+		cat food.txt > newfile1.txt = Mandei o conteudo do 1 arquivo pro segundo, e não causa alteração no primeiro;
+		echo "I like food." > newfile1.txt = Substituindo o conteudo do arquivo usando o comando "echo", ">" substitui o conteudo por padrão;
+		echo "This food is good." >> newfile1.txt = Por usar ">>" o conteudo não sera substituido e sim adicionado ao final do arquivo; 
+
+		STDIN = Técnica usada para fornecer dados de entrada a um comando, seja digitado no terminal ou redirecionado de um arquivo.
+		cat > newfile.txt = O que você digitar será enviado para o arquivo newfile.txt até pressionar Ctrl+D;
+		cat < arquivo.txt = O conteúdo de arquivo.txt será lido e exibido no terminal;
+		
+		STDERR = Técnica usada para exibir mensagens de erro geradas por um comando.
+		ls /pasta_inexistente = Exibe uma mensagem de erro no terminal, pois o diretório não existe;
+		ls /pasta_inexistente 2> erro.txt = A mensagem de erro será salva no arquivo erro.txt em vez de ser exibida no terminal;
+};
+
+
+
+
+
+Comandos{
+
+	ls{
+		O "ls" por padrão imprime os resultados em ordem alfabetica.
+		Posso fornecer as opcões do resultado de forma separada ou conjunta. Separada (ls -l -r), Junta (ls -lr) ou (ls -rl).
+	
+		ls = Vai retornar os arquivos presentes no diretorio atual;
+		ls (diretorioQualquer) = Vai retornar os arquivos presentes em um diretorio especifico que você solicitou;
+		ls -l = Vai retornar o comando "ls" com maiores informações sobre cada arquivo presente no diretorio atual (tipo de arquivo, as permissões, propriedade ou o carimbo de data/hora); 
+		ls (diretorioQualquer) -l = Vai retornar o comando "ls" com maiores informações sobre cada arquivo do diretorio especifico que você solicitou;
+		ls -r = Ira imprimir os resultados em ordem alfabetica inversa;
+		ls -t = Ira imprimir os resultados por registro de data/hora;
+		ls -s = Ira imprimir por tamanho do arquivo;
+	};
+
+	pwd{
+		O "pwd" vai imprimir sua localização dentro do sistema de aquivos;
+	};
+
+	cd{
+		O "cd" (change directory) é usado para navegação entre os arquivos, mudar de diretorio;
+		cd (arquivoQualquer) = Vai sair do seu diretorio atual e ir pro desejado;
+		cd / = Vai fazer que você volte para o diretorio inicial, retorna pro zero (mover pro root, a raiz);
+		cd .. = Vai fazer com que você volte para um diretorio/arquivo anterior;
+		cd ~ = O "~" representa o home do usuario atual, então esse comando volta pra home;
+		cd . = O ponto vai sempre representar seu diretorio atual, então não e muito util.
+	};
+
+	su{
+		O "su" permite que voce atue temporariamente como um outro tipo de usuario;
+		Para sair do nivel de usuario escolhido e voltar basta usar o comando "exit";
+	};
+
+	sudo{
+		O "sudo" permite que o usuario execute comandos como outro tipo de usuario sem precisar criar um novo shell;
+	};
+
+	chmode{
+		Comando usado para alterar as permissões de um arquivo ou diretorio;
+		Estrutura: chmod [<CONJUNTO><AÇÃO><PERMISSÕES>]... ARQUIVO
+		Conjunto: No metodo simbolico usa-se, u = usuario, g = grupo, o = outros, a = todos.
+		Ação: Os simbolos "+" pra adicionar, "-" pra remover e "=" para especificar a permissão exata;
+		Permissões: r = ler, w = escrever e x = executar
+	
+		ex: chmod u+x hello.sh   Dei permissão de executar para o usuario
+	};
+
+	chown{
+		Comando usado para fazer a alteração do proprietario ou grupo de um arquivo/diretorio;
+		sudo chown root hell.sh = Esse comando ira fazer com que o root se torne proprietario do arquivo hello.sh, e o sudo serve pra executar o comando como outro tipo de usuario.
+	
+	};
+	
+	cat, head e tail{
+		Comando usado para a visualização do conteudo de arquivos, geralmente os menores visto que se for um muito longo não tera como pausar, a não ser que use um pager que permite realizar pausas, como o "more" e "less";
+		Caso queira visualizar uma quantidade especifica de linha usa-se os comando "head" (pra linhas do superior) e "tail" (pra linhas do inferior), onde você fornece quantas linhas do arquivo devem retornar.  
+		cat animals.txt = Ira visualizar o conteudo desse arquivo; 
+		head alpha.txt = Retorna as 10 primeiras linhas do arquivo;
+		tail alpha.txt = Retorna as 10 ultimas linhas do arquivo;
+		head -n 5 alpha.txt     tail -n 5 alpha.txt     = Retornam um numero especifo de linhas que eu desejo;
+	};
+
+	cp{
+		Comando usado pra fazer uma copia de um arquivo;
+		cp /etc/passwd . = copiar o arquivo /etc/passwd para o diretório atual, o "." serve pra dizer que quero a copia no diretorio atual, no lugar do ponto posso colocar um caminho de um diretorio para gerar a copia;
+	};
+
+	dd{	
+		Comando usado para copiar arquivo ou partições inteiras no nivel de bits;
+		dd if=/dev/zero of=/tmp/swapex bs=1M count=50 
+		if = arquivo de entrada a ser lido;
+		of = arquivo de saida a ser gravado;
+		bs = tamanho do bloco a ser usado, padrão e em bytes mas posso usar outras unidades;
+		count = Numero de blocos a serem lidos a partir do arquivo de entrada; 
+	};
+	
+	mv{
+		Comando usado para mover um arquivo de um lugar para o outro;
+		Requer 2 argumentos que e o caminho do arquivo a ser movido e o local de destino.
+		mv numbers.txt School = Ira mover 1 arquivo pro diretorio School; 
+		mv numbers.txt letters.txt alpha.txt School = Ira mover 3 arquivos pro diretorio School;  
+		Se o arquivo for usado pra mover dentro do mesmo diretorio pode ser usado pra renomear o arquivo;
+		mv animais.txt zoo.txt = Trocou o nome do arquivo;
+	};
+
+	rm{
+		Comando usado para excluir arquivos e diretorios;
+		rm arquivo.txt = Apaga um arquivo solicitado;
+		rm -r diretorio = Apaga um diretorio e tudo dentro dele;
+		Caso queira remover sem confirmação posso adicionar um "f", assim: "-rf" apaga sem precisar de confirmação;
+	};
+	
+	grep{
+		Comando pra filtrar uma informação de um arquivo;
+		grep sysadmin passwd = Filtra a informação do sysadmin dentro do arquivo passwd, retornando apenas sbre ela;
+	};
+	
+	shutdown{
+		Comando pra desligar o sistema imediatamente ou em algum momento agendado;
+		shutdown now = Desliga imediatamente;
+		shutdown 13:33 = Desliga em um horario especifico do dia;
+		shutdown +12 = Desliga apos alguns minutos;
+		shutdown -c = Cancela um desligamento agendado;
+		shutdown -r now = Reinicia o sistema imediatamente;
+		Posso colocar na frente desses comandos uma mensagem entre "" pra falar que o sistema sera desligado ou etc.
+	};
+	
+	ifconfig{
+		Comando pra exibir as informações sobre a rede;
+		Posso usar o semelhante iwconfig quando for uma rede sem fio; 
+	};
+	
+	ping{
+		Comando pra verificar a conectividade entre dois computadores.
+	};
+		
+	ps{
+		Comando pra visualizar os processos em execução no sistema
+		Retorna: PID → ID do processo
+		TTY → Terminal onde o processo está rodando
+		TIME → Tempo de CPU utilizado
+		CMD → Comando que iniciou o processo
+	
+		ps -e = Exibe todos os processos em execução no sistema;
+		ps -ef = Traz uma resposta mais detalhada sobre os processos;
+	};
+	
+	apt-get update{
+		Comando pra atualizar a listas de pacotes pra serem instalados;
+	};
+	
+	apt-cache search{
+		Comando pra pesquisar pacotes atravez de uma palavra chave;
+		apt-cache search cow = Pesquisa o pacote relacionado a palavra "cow";
+	};
+	
+	apt-get install{
+		Comando pra instalar um pacote;
+		 apt-get install pacote =  Instalando o pacote "cowsay";
+	};
+	
+	apt-get update, apt-get upgrade{
+		Esses comandos irão fazer a atualização dos pacotes;
+	};
+	
+	apt-get remove, apt-get purge{
+		Comandos pra remover pacotes;
+		apt-get remove pacote = Ira remover o programa mas vai manter os arquivos de configuração;
+		apt-get purge pacote = Remove o programa e seus arquivos de configuração;  
+	};
+
+	passwd{
+		Comando usado pra fazer a atualização de senhas;
+		O usuario so pode trocar a propria senha mas o usuario root pode trocar de todos os usuarios;
+		Caso o usuario queira exibir informações sobre a sua senha pode acrescentar a opção "-s" com o user name;
+		passwd = Usuario pedindo alteração da propria senha;
+		passwd sysadmin = O usuario root esta trocando a senha do "sysadmin";
+	
+		sysadmin P 12/20/2017 0 99999 7 -1
+	
+		Campo			Exemplo		Significado
+		User Name		sysadmin	O nome do usuário.
+		
+		Password Status		P		P indica uma senha utilizável.
+							L indica uma senha bloqueada.
+							NP indica que não há senha.
+	
+		Change Date		03/01/2015	A data em que a senha foi alterada pela última vez.
+		Minimum			0		O número mínimo de dias que deve passar antes que a senha atual possa ser alterada pelo usuário.
+		Maximum			99999		O número máximo de dias restantes para a senha expirar.
+		Warn			7		O número de dias antes da expiração da senha que o usuário é avisado.
+		Inactive		-1		O número de dias após a expiração da senha que a conta do usuário permanece ativa.
+	};
+
+	date{
+		Comando pra verificar data/hora e seu formato no sistema;
+	};
+
+	clear{
+		Limpa a tela do terminal;
+	};
+
+	Não muito importante{
+		aptitude -moo = Comando easter egg do gerenciador de pacotes aptitude, exime mensagens ocultas sobre uma vaca;
+		aptitude -moo -v	ou	aptitude -moo -vv	ou	aptitude -moo -vvv	;
+		O "-v" representa (verbose), serve para exibir mais informações sobre o que esta acontecendo.
+		./ (arquivo) = Indica que o comando deve ser executado a partir do diretorio atual;
+		Utilizar '' nas expressões regulares para que possam enteder os sinais;
+	};
+};
